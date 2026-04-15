@@ -238,7 +238,7 @@ const QUESTIONS_DB = [
 
 const ALL_QUESTIONS = QUESTIONS_DB;
 
-function getRandomQuestions(count = 12) {
+function getRandomQuestions(count = 18) {
     const shuffled = [...ALL_QUESTIONS];
     for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
