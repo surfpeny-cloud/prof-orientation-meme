@@ -246,4 +246,3 @@ function getRandomQuestions(count = 18) {
     }
     return shuffled.slice(0, count);
 }
-console.log('Всего вопросов в базе:', ALL_QUESTIONS.length);
