@@ -367,6 +367,57 @@ if (saveBtn) {
 }
 
 // Запуск приложения
+// Плавное появление элементов
+function animateElement(element, delay = 0) {
+    if (!element) return;
+    element.style.opacity = '0';
+    element.style.transform = 'translateY(20px)';
+    element.style.transition = `all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1) ${delay}s`;
+    setTimeout(() => {
+        element.style.opacity = '1';
+        element.style.transform = 'translateY(0)';
+    }, 10);
+}
+
+// Анимация для опций при появлении
+function animateOptions() {
+    const options = document.querySelectorAll('.option-btn');
+    options.forEach((opt, idx) => {
+        animateElement(opt, idx * 0.05);
+    });
+}
+
+// Эффект конфетти при завершении
+function showConfetti() {
+    const colors = ['#6C63FF', '#FF6584', '#00D2FF', '#FFD166'];
+    for (let i = 0; i < 50; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.animationDelay = Math.random() * 0.5 + 's';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.position = 'fixed';
+        confetti.style.top = '-10px';
+        confetti.style.width = '8px';
+        confetti.style.height = '8px';
+        confetti.style.borderRadius = '50%';
+        confetti.style.pointerEvents = 'none';
+        confetti.style.zIndex = '9999';
+        confetti.style.animation = 'fall 2s ease-in forwards';
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 2000);
+    }
+}
+
+// Добавим CSS для конфетти
+const confettiStyle = document.createElement('style');
+confettiStyle.textContent = `
+    @keyframes fall {
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+`;
+document.head.appendChild(confettiStyle);
 init();
 
 // Поделиться результатом (обновлённая версия)
