@@ -85,7 +85,7 @@ function startTest(resumeFromSave = false) {
     displayCurrentQuestion();
 }
 
-// Отображение текущего вопроса
+// Отображение текущего вопроса (с поддержкой мемов-картинок)
 function displayCurrentQuestion() {
     const question = currentQuestions[currentQuestionIndex];
     if (!question) return;
@@ -99,9 +99,26 @@ function displayCurrentQuestion() {
     const progressFill = document.getElementById('progress-fill');
     if (progressFill) progressFill.style.width = `${progress}%`;
     
-    // Обновляем мем-эмодзи
-    const memeEmoji = document.getElementById('meme-emoji');
-    if (memeEmoji) memeEmoji.textContent = question.memeEmoji || '🤔';
+    // Показываем мем-картинку (если есть)
+    const memeImg = document.getElementById('question-meme');
+    const fallback = document.getElementById('meme-emoji-fallback');
+    
+    if (question.memeUrl && memeImg) {
+        memeImg.src = question.memeUrl;
+        memeImg.style.display = 'block';
+        if (fallback) fallback.style.display = 'none';
+        memeImg.onerror = () => {
+            memeImg.style.display = 'none';
+            if (fallback) {
+                fallback.textContent = question.memeEmoji || '🤔';
+                fallback.style.display = 'block';
+            }
+        };
+    } else if (fallback) {
+        memeImg.style.display = 'none';
+        fallback.textContent = question.memeEmoji || '🤔';
+        fallback.style.display = 'block';
+    }
     
     // Обновляем текст вопроса
     const questionText = document.getElementById('question-text');
@@ -120,7 +137,7 @@ function displayCurrentQuestion() {
         });
     }
     
-    // Сохраняем прогресс автоматически
+    // Сохраняем прогресс
     saveProgress(currentQuestionIndex, userAnswers);
 }
 
@@ -351,3 +368,23 @@ if (saveBtn) {
 
 // Запуск приложения
 init();
+
+// Поделиться результатом (обновлённая версия)
+function shareResult() {
+    if (!currentResult) return;
+    
+    const text = `🧠 Я прошёл тест по профориентации!\n\n🎯 Мой тип: ${currentResult.diagnosis}\n✨ Суперсила: ${currentResult.superpower}\n\n🏆 ТОП-3 профессии:\n${currentResult.top5.slice(0,3).map(p => `• ${p.name}`).join('\n')}\n\n🔗 Пройди тест и ты: ${window.location.href}`;
+    
+    if (navigator.share) {
+        navigator.share({
+            title: 'Мой результат профориентации',
+            text: text,
+            url: window.location.href
+        }).catch(() => {
+            copyToClipboard(text);
+        });
+    } else {
+        copyToClipboard(text);
+        alert('Текст скопирован в буфер обмена! Поделись им с друзьями.');
+    }
+}
