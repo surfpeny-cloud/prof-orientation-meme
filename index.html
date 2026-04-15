@@ -3,40 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Профориентация 2.0 — найди свою профессию с мемами</title>
-    <meta name="description" content="Умный тест с мемами, который подскажет тебе профессию и стратегию развития">
+    <title>Профориентация 2.0 — премиум-тест с мемами</title>
+    <meta name="description" content="Элитный профориентационный тест с мемами. Твой тип личности, топ-5 профессий и стратегия развития">
+    
+    <!-- Премиум шрифты -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome 6 иконки -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <!-- HTML2PDF для скачивания отчёта -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app-container" id="app">
         <!-- ЭКРАН ЗАГРУЗКИ -->
         <div id="loading-screen" class="screen active">
-            <div class="loader"></div>
-            <p>Загружаем мемы...</p>
+            <div class="spinner"></div>
+            <p class="loading-text">Загружаем мемы...</p>
+            <div class="loading-dots">
+                <span></span><span></span><span></span>
+            </div>
         </div>
 
         <!-- ПРИВЕТСТВИЕ -->
         <div id="welcome-screen" class="screen">
             <div class="meme-container">
-                <img id="welcome-meme" class="meme-image" src="memes/welcome.jpg" alt="Приветственный мем" onerror="this.src='https://via.placeholder.com/400x200?text=🎯+Кем+тебе+быть?'">
+                <img id="welcome-meme" class="meme-image premium-glow" src="memes/welcome.jpg" alt="Приветственный мем" 
+                     onerror="this.src='https://via.placeholder.com/400x200?text=🎯+Кем+тебе+быть?'">
             </div>
+            <div class="badge">✨ ПРЕМИУМ ТЕСТ ✨</div>
             <h1>Кем тебе <span class="gradient-text">быть</span>?</h1>
-            <p>Ответь на вопросы с мемами и получи стратегию!</p>
-            <ul class="features-list">
-                <li>✅ Твой тип личности с мем-диагнозом</li>
-                <li>✅ ТОП-5 профессий</li>
-                <li>✅ Пошаговая стратегия</li>
-                <li>✅ Бесплатные курсы</li>
-            </ul>
-            <button id="start-btn" class="btn-primary">🚀 Начать тест</button>
-            <button id="load-saved-btn" class="btn-text" style="display:none;">📂 Продолжить сохранённый тест</button>
+            <p class="subtitle">Ответь на вопросы с мемами и получи стратегию мечты</p>
+            
+            <div class="stats-row">
+                <div class="stat-chip"><i class="fas fa-brain"></i> 5 типов</div>
+                <div class="stat-chip"><i class="fas fa-chart-line"></i> ТОП-5 профессий</div>
+                <div class="stat-chip"><i class="fas fa-calendar"></i> Стратегия на год</div>
+            </div>
+            
+            <button id="start-btn" class="btn-primary">
+                <i class="fas fa-rocket"></i> Начать тест
+                <span class="btn-glow"></span>
+            </button>
+            <button id="load-saved-btn" class="btn-text" style="display:none;">
+                <i class="fas fa-save"></i> Продолжить сохранённый тест
+            </button>
         </div>
 
         <!-- ОСНОВНОЙ ТЕСТ -->
         <div id="quiz-screen" class="screen">
             <div class="quiz-header">
                 <div class="progress-info">
-                    <span id="question-counter">0 / 0</span>
+                    <span class="question-counter" id="question-counter">
+                        <i class="fas fa-question-circle"></i> <span id="current-q-num">0</span> / <span id="total-q-num">0</span>
+                    </span>
+                    <span class="score-badge" id="score-badge">
+                        <i class="fas fa-star"></i> <span id="score-value">0</span>
+                    </span>
                 </div>
                 <div class="progress-bar">
                     <div id="progress-fill" class="progress-fill"></div>
@@ -45,7 +71,7 @@
             
             <div class="question-card">
                 <div class="meme-container" id="meme-container">
-                    <img id="question-meme" class="question-meme" src="" alt="Мем" onerror="this.style.display='none'; document.getElementById('meme-emoji-fallback').style.display='block'">
+                    <img id="question-meme" class="question-meme" src="" alt="Мем">
                     <div id="meme-emoji-fallback" class="meme-placeholder" style="display:none;">🤔</div>
                 </div>
                 <h2 id="question-text" class="question-text">Загрузка...</h2>
@@ -53,52 +79,74 @@
             </div>
 
             <div class="quiz-footer">
-                <button id="save-progress-btn" class="btn-text-small">💾 Сохранить прогресс</button>
+                <button id="save-progress-btn" class="btn-text-small">
+                    <i class="fas fa-save"></i> Сохранить прогресс
+                </button>
             </div>
         </div>
 
         <!-- ПРОМЕЖУТОЧНЫЙ РЕЗУЛЬТАТ -->
         <div id="midpoint-screen" class="screen">
             <div class="meme-container">
-                <img src="memes/halfway.jpg" class="meme-image" alt="Ты на полпути" onerror="this.style.display='none'">
+                <img src="memes/halfway.jpg" class="meme-image" alt="Ты на полпути" 
+                     onerror="this.style.display='none'">
             </div>
-            <h2>⚡ Ты уже на полпути!</h2>
-            <div id="midpoint-stats"></div>
-            <button id="continue-btn" class="btn-primary">Продолжить →</button>
+            <div class="midpoint-icon">⚡</div>
+            <h2>Ты уже на полпути!</h2>
+            <div id="midpoint-stats" class="midpoint-stats"></div>
+            <button id="continue-btn" class="btn-primary">
+                <i class="fas fa-arrow-right"></i> Продолжить
+            </button>
         </div>
 
         <!-- ФИНАЛЬНЫЙ РЕЗУЛЬТАТ -->
         <div id="result-screen" class="screen">
             <div class="result-hero">
-                <img id="result-meme" class="result-meme-image" src="" alt="Мем-диагноз" onerror="this.style.display='none'">
+                <img id="result-meme" class="result-meme-image" src="" alt="Мем-диагноз">
                 <div id="result-emoji-fallback" class="result-emoji">🏆</div>
+                <div class="result-badge" id="result-badge">ВАШ РЕЗУЛЬТАТ</div>
                 <h2 id="meme-diagnosis"></h2>
             </div>
             
             <div class="superpower-card">
-                <h3>✨ Твоя суперсила</h3>
+                <div class="card-icon"><i class="fas fa-bolt"></i></div>
+                <h3>Твоя суперсила</h3>
                 <p id="superpower"></p>
                 <div class="stats-grid" id="stats-grid"></div>
             </div>
 
-            <h3>🎯 ТОП-5 профессий для тебя</h3>
+            <div class="section-header">
+                <i class="fas fa-trophy"></i>
+                <h3>ТОП-5 профессий для тебя</h3>
+            </div>
             <div id="top5-list" class="professions-list"></div>
 
-            <h3>🗺️ Стратегия развития</h3>
+            <div class="section-header">
+                <i class="fas fa-map"></i>
+                <h3>Стратегия развития</h3>
+            </div>
             <div id="roadmap-list"></div>
 
-            <h3>📚 Бесплатные курсы</h3>
+            <div class="section-header">
+                <i class="fas fa-graduation-cap"></i>
+                <h3>Бесплатные курсы</h3>
+            </div>
             <div id="courses-list" class="courses-list"></div>
 
             <div class="result-buttons">
-                <button id="restart-btn" class="btn-secondary">🔄 Пройти заново</button>
-                <button id="share-btn" class="btn-primary">📤 Поделиться</button>
-                <button id="pdf-btn" class="btn-secondary">📄 Скачать PDF</button>
+                <button id="restart-btn" class="btn-secondary">
+                    <i class="fas fa-redo-alt"></i> Пройти заново
+                </button>
+                <button id="share-btn" class="btn-primary">
+                    <i class="fas fa-share-alt"></i> Поделиться
+                </button>
+                <button id="pdf-btn" class="btn-secondary">
+                    <i class="fas fa-file-pdf"></i> Скачать PDF
+                </button>
             </div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="questions.js"></script>
     <script src="strategies.js"></script>
     <script src="utils.js"></script>
