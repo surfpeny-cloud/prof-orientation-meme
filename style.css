@@ -418,3 +418,59 @@ body {
         width: 100%;
     }
 }
+
+/* Стили для мемов-картинок */
+.meme-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.meme-image {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+.question-meme {
+    width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.result-meme-image {
+    width: 100%;
+    max-height: 180px;
+    object-fit: contain;
+    border-radius: 20px;
+    margin-bottom: 15px;
+}
+
+.meme-placeholder {
+    font-size: 80px;
+    background: linear-gradient(135deg, #667eea20, #764ba220);
+    padding: 20px;
+    border-radius: 60px;
+    display: inline-block;
+}
+
+/* Адаптация для телефонов */
+@media (max-width: 550px) {
+    .question-meme {
+        max-height: 150px;
+    }
+    
+    .meme-image {
+        max-height: 150px;
+    }
+    
+    .meme-placeholder {
+        font-size: 60px;
+        padding: 15px;
+    }
+}
