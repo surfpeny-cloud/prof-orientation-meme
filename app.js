@@ -17,7 +17,7 @@ async function init() {
     showScreen('loading');
     await new Promise(r => setTimeout(r, 800));
     
-    currentQuestions = getRandomQuestions(9);
+    currentQuestions = getRandomQuestions(12);
     
     const totalSpan = document.getElementById('total-q-num');
     if (totalSpan) totalSpan.textContent = currentQuestions.length;
@@ -65,7 +65,7 @@ function startTest(resumeFromSave = false) {
     }
     
     if (!resumeFromSave) {
-        currentQuestions = getRandomQuestions(9);
+        currentQuestions = getRandomQuestions(12);
     }
     
     showScreen('quiz');
