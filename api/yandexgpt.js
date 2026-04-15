@@ -23,7 +23,7 @@ export default async function handler(req, res) {
     
     if (!apiKey || !folderId) {
       console.error('Missing YANDEX_API_KEY or YANDEX_FOLDER_ID');
-      return res.status(500).json({ error: 'API not configured' });
+      return res.status(500).json({ error: 'API not configured on server' });
     }
     
     // Формируем историю сообщений для контекста
