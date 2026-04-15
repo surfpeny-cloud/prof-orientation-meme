@@ -3,51 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Профориентация 2.0 — премиум-тест с мемами</title>
-    <meta name="description" content="Элитный профориентационный тест с мемами. Твой тип личности, топ-5 профессий и стратегия развития">
-    
-    <!-- Премиум шрифты -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome 6 иконки -->
+    <title>Профориентация — премиум тест с мемами</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
-    <!-- HTML2PDF для скачивания отчёта -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="app-container" id="app">
-        <!-- Кнопка переключения темы -->
-<button id="theme-toggle" class="theme-toggle">
-    <i class="fas fa-moon"></i>
-    <i class="fas fa-sun" style="display:none;"></i>
-</button>
-        <!-- ЭКРАН ЗАГРУЗКИ -->
-      <div id="loading-screen" class="screen active">
-    <div class="loading-container">
-        <div class="loading-animation">
-            <div class="loading-ring"></div>
-            <div class="loading-ring"></div>
-            <div class="loading-ring"></div>
-        </div>
-        <p class="loading-text">Загружаем мемы и вопросы...</p>
-        <div class="loading-progress">
-            <div class="loading-progress-fill"></div>
-        </div>
-    </div>
-</div>
+    <button id="theme-toggle" class="theme-toggle">
+        <i class="fas fa-moon"></i>
+        <i class="fas fa-sun" style="display:none;"></i>
+    </button>
 
-        <!-- ПРИВЕТСТВИЕ -->
-        <div id="welcome-screen" class="screen">
-            <div class="meme-container">
-                <img id="welcome-meme" class="meme-image premium-glow" src="memes/welcome.jpg" alt="Приветственный мем" 
-                     onerror="this.src='https://via.placeholder.com/400x200?text=🎯+Кем+тебе+быть?'">
+    <div class="app-container">
+        <!-- ЭКРАН ЗАГРУЗКИ -->
+        <div id="loading-screen" class="screen active">
+            <div class="loading-container">
+                <div class="loading-animation">
+                    <div class="loading-ring"></div>
+                    <div class="loading-ring"></div>
+                    <div class="loading-ring"></div>
+                </div>
+                <p class="loading-text">Загружаем мемы и вопросы...</p>
+                <div class="loading-progress">
+                    <div class="loading-progress-fill"></div>
+                </div>
             </div>
-            <div class="badge">✨ ПРЕМИУМ ТЕСТ ✨</div>
+        </div>
+
+        <!-- ЭКРАН ПРИВЕТСТВИЯ -->
+        <div id="welcome-screen" class="screen">
+            <div class="premium-badge">✨ ПРЕМИУМ ТЕСТ ✨</div>
             <h1>Кем тебе <span class="gradient-text">быть</span>?</h1>
-            <p class="subtitle">Ответь на вопросы с мемами и получи стратегию мечты</p>
+            <p class="subtitle">Ответь на <strong id="total-questions-count">18</strong> вопросов с мемами и получи стратегию мечты</p>
             
             <div class="stats-row">
                 <div class="stat-chip"><i class="fas fa-brain"></i> 5 типов</div>
@@ -57,22 +45,23 @@
             
             <button id="start-btn" class="btn-primary">
                 <i class="fas fa-rocket"></i> Начать тест
-                <span class="btn-glow"></span>
             </button>
-            <button id="load-saved-btn" class="btn-text" style="display:none;">
+            <button id="load-saved-btn" class="btn-text" style="display:none; margin-top:12px;">
                 <i class="fas fa-save"></i> Продолжить сохранённый тест
             </button>
         </div>
 
-        <!-- ОСНОВНОЙ ТЕСТ -->
+        <!-- ЭКРАН ТЕСТА -->
         <div id="quiz-screen" class="screen">
             <div class="quiz-header">
                 <div class="progress-info">
-                    <span class="question-counter" id="question-counter">
-                        <i class="fas fa-question-circle"></i> <span id="current-q-num">0</span> / <span id="total-q-num">0</span>
+                    <span class="question-counter">
+                        <i class="fas fa-question-circle"></i> 
+                        <span id="current-q-num">0</span> / <span id="total-q-num">18</span>
                     </span>
-                    <span class="score-badge" id="score-badge">
-                        <i class="fas fa-star"></i> <span id="score-value">0</span>
+                    <span class="score-badge">
+                        <i class="fas fa-star"></i> 
+                        <span id="score-value">0</span>%
                     </span>
                 </div>
                 <div class="progress-bar">
@@ -96,11 +85,10 @@
             </div>
         </div>
 
-        <!-- ПРОМЕЖУТОЧНЫЙ РЕЗУЛЬТАТ -->
+        <!-- ЭКРАН ПОЛПУТИ -->
         <div id="midpoint-screen" class="screen">
             <div class="meme-container">
-                <img src="memes/halfway.jpg" class="meme-image" alt="Ты на полпути" 
-                     onerror="this.style.display='none'">
+                <img src="memes/halfway.jpg" class="meme-image" alt="Ты на полпути" onerror="this.style.display='none'">
             </div>
             <div class="midpoint-icon">⚡</div>
             <h2>Ты уже на полпути!</h2>
@@ -110,12 +98,12 @@
             </button>
         </div>
 
-        <!-- ФИНАЛЬНЫЙ РЕЗУЛЬТАТ -->
+        <!-- ЭКРАН РЕЗУЛЬТАТА -->
         <div id="result-screen" class="screen">
             <div class="result-hero">
-                <img id="result-meme" class="result-meme-image" src="" alt="Мем-диагноз">
+                <img id="result-meme" class="result-meme-image" src="" alt="Мем-диагноз" onerror="this.style.display='none'">
                 <div id="result-emoji-fallback" class="result-emoji">🏆</div>
-                <div class="result-badge" id="result-badge">ВАШ РЕЗУЛЬТАТ</div>
+                <div class="result-badge">ВАШ РЕЗУЛЬТАТ</div>
                 <h2 id="meme-diagnosis"></h2>
             </div>
             
