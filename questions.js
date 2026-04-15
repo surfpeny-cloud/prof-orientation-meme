@@ -1,4 +1,4 @@
-// ========== БАЗА ВОПРОСОВ С РЕАЛЬНЫМИ МЕМАМИ ==========
+// ========== БАЗА ВОПРОСОВ С МЕМАМИ ==========
 const QUESTIONS_DB = [
     {
         id: 1,
@@ -124,60 +124,12 @@ const QUESTIONS_DB = [
             { text: "Фантастика", emoji: "👽", scores: { tech: 3, human: 0, art: 2, nature: 0, business: 0 } },
             { text: "Драма (про людей и чувства)", emoji: "🎭", scores: { tech: 0, human: 3, art: 1, nature: 0, business: 0 } }
         ]
-    },
-    {
-        id: 10,
-        text: "🛠️ Что ты делаешь в свободное время?",
-        memeUrl: "memes/freetime-meme.jpg",
-        memeEmoji: "🛠️🎨",
-        category: "hobby",
-        options: [
-            { text: "Учусь новому (курсы, статьи)", emoji: "📖", scores: { tech: 2, human: 0, art: 1, nature: 0, business: 2 } },
-            { text: "Мастерю/чиню/собираю", emoji: "🔨", scores: { tech: 3, human: 0, art: 1, nature: 0, business: 0 } },
-            { text: "Встречаюсь с друзьями", emoji: "👯", scores: { tech: 0, human: 3, art: 0, nature: 1, business: 0 } },
-            { text: "Рисую/фотографирую/творю", emoji: "🎨", scores: { tech: 0, human: 0, art: 3, nature: 1, business: 0 } },
-            { text: "Гуляю на природе", emoji: "🌲", scores: { tech: 0, human: 0, art: 1, nature: 3, business: 0 } }
-        ]
     }
 ];
-
-// Дополнительные вопросы
-const MORE_QUESTIONS = [
-    {
-        id: 11,
-        text: "🧩 Что тебе нравится собирать?",
-        memeUrl: "memes/puzzle-meme.jpg",
-        memeEmoji: "🧩",
-        category: "hobby",
-        options: [
-            { text: "Пазлы или конструкторы", emoji: "🧩", scores: { tech: 2, human: 0, art: 2, nature: 0, business: 0 } },
-            { text: "Команду на мероприятие", emoji: "👥", scores: { tech: 0, human: 3, art: 0, nature: 0, business: 1 } },
-            { text: "Бизнес-модель", emoji: "📈", scores: { tech: 0, human: 0, art: 0, nature: 0, business: 3 } },
-            { text: "Гербарий или коллекции", emoji: "🍂", scores: { tech: 0, human: 0, art: 1, nature: 3, business: 0 } }
-        ]
-    },
-    {
-        id: 12,
-        text: "💬 Какую соцсеть ты любишь больше всего?",
-        memeUrl: "memes/social-meme.jpg",
-        memeEmoji: "📱",
-        category: "hobby",
-        options: [
-            { text: "GitHub / StackOverflow", emoji: "🐙", scores: { tech: 3, human: 0, art: 0, nature: 0, business: 1 } },
-            { text: "Instagram / Pinterest", emoji: "📸", scores: { tech: 0, human: 1, art: 3, nature: 1, business: 1 } },
-            { text: "Telegram (чаты и каналы)", emoji: "✈️", scores: { tech: 1, human: 2, art: 0, nature: 0, business: 2 } },
-            { text: "YouTube (обучение)", emoji: "▶️", scores: { tech: 2, human: 1, art: 2, nature: 0, business: 1 } },
-            { text: "Reddit / Twitter", emoji: "🐦", scores: { tech: 1, human: 2, art: 1, nature: 0, business: 1 } }
-        ]
-    }
-];
-
-// Объединяем все вопросы
-const ALL_QUESTIONS = [...QUESTIONS_DB, ...MORE_QUESTIONS];
 
 // Функция для получения рандомных N вопросов
-function getRandomQuestions(count = 12) {
-    const shuffled = [...ALL_QUESTIONS];
+function getRandomQuestions(count = 9) {
+    const shuffled = [...QUESTIONS_DB];
     for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
