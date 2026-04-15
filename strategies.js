@@ -20,7 +20,7 @@ const STRATEGIES = {
         ],
         courses: [
             { name: "Stepik — Программирование для начинающих", url: "https://stepik.org/course/67" },
-            { name: "Яндекс Практикум — Веб-разработчик (бесплатный вводный)", url: "https://practicum.yandex.ru/web/" },
+            { name: "Яндекс Практикум — Веб-разработчик", url: "https://practicum.yandex.ru/web/" },
             { name: "Хекслет — Основы Python", url: "https://ru.hexlet.io/programs/python-basics" }
         ]
     },
@@ -121,10 +121,8 @@ const STRATEGIES = {
     }
 };
 
-// Тип по умолчанию
 STRATEGIES.default = STRATEGIES.human;
 
-// Получить тип по результатам подсчёта
 function getDominantType(scores) {
     let maxScore = -1;
     let dominantType = 'human';
