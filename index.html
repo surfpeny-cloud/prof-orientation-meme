@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Профориентация 2.0 — найди свою профессию с мемами</title>
+    <meta name="description" content="Умный тест с мемами, который подскажет тебе профессию и стратегию развития">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container" id="app">
+        <!-- ЭКРАН ЗАГРУЗКИ -->
+        <div id="loading-screen" class="screen active">
+            <div class="loader"></div>
+            <p>Загружаем мемы...</p>
+        </div>
+
+        <!-- ПРИВЕТСТВИЕ -->
+        <div id="welcome-screen" class="screen">
+            <div class="meme-emoji bounce">🎯🧠🔥</div>
+            <h1>Кем тебе <span class="gradient-text">быть</span>?</h1>
+            <p>Ответь на <strong id="total-questions">30</strong> вопросов с мемами и получи:</p>
+            <ul class="features-list">
+                <li>✅ Твой тип личности с мем-диагнозом</li>
+                <li>✅ ТОП-5 профессий с уровнем сложности</li>
+                <li>✅ Пошаговую стратегию на год</li>
+                <li>✅ Список бесплатных курсов</li>
+            </ul>
+            <button id="start-btn" class="btn-primary">🚀 Начать тест</button>
+            <button id="load-saved-btn" class="btn-text">📂 Продолжить сохранённый тест</button>
+        </div>
+
+        <!-- ОСНОВНОЙ ТЕСТ -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-header">
+                <div class="progress-info">
+                    <span id="question-counter">0 / 0</span>
+                    <span id="score-badge" class="score-badge">🏆</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+            </div>
+            
+            <div class="question-card">
+                <div class="meme-container" id="meme-container">
+                    <div class="meme-placeholder" id="meme-emoji">🤔</div>
+                </div>
+                <h2 id="question-text" class="question-text">Загрузка...</h2>
+                <div id="options-container" class="options-grid"></div>
+            </div>
+
+            <div class="quiz-footer">
+                <button id="prev-btn" class="btn-icon" style="display:none;">◀ Назад</button>
+                <button id="save-progress-btn" class="btn-text-small">💾 Сохранить прогресс</button>
+            </div>
+        </div>
+
+        <!-- ПРОМЕЖУТОЧНЫЙ РЕЗУЛЬТАТ (после 10 вопросов) -->
+        <div id="midpoint-screen" class="screen">
+            <div class="meme-emoji">⚡</div>
+            <h2>Ты уже на полпути!</h2>
+            <div id="midpoint-stats"></div>
+            <button id="continue-btn" class="btn-primary">Продолжить →</button>
+        </div>
+
+        <!-- ФИНАЛЬНЫЙ РЕЗУЛЬТАТ -->
+        <div id="result-screen" class="screen">
+            <div class="result-hero">
+                <div class="result-emoji" id="result-emoji">🏆</div>
+                <h2 id="meme-diagnosis"></h2>
+            </div>
+            
+            <div class="superpower-card">
+                <h3>✨ Твоя суперсила</h3>
+                <p id="superpower"></p>
+                <div class="stats-grid" id="stats-grid"></div>
+            </div>
+
+            <h3>🎯 ТОП-5 профессий для тебя</h3>
+            <div id="top5-list" class="professions-list"></div>
+
+            <h3>🗺️ Стратегия развития на 12 месяцев</h3>
+            <div id="roadmap-list"></div>
+
+            <h3>📚 Бесплатные курсы для старта</h3>
+            <div id="courses-list" class="courses-list"></div>
+
+            <div class="result-buttons">
+                <button id="restart-btn" class="btn-secondary">🔄 Пройти заново</button>
+                <button id="share-btn" class="btn-primary">📤 Поделиться результатом</button>
+                <button id="pdf-btn" class="btn-secondary">📄 Скачать PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="questions.js"></script>
+    <script src="strategies.js"></script>
+    <script src="utils.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
