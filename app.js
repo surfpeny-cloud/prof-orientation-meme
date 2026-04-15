@@ -353,5 +353,31 @@ if (saveBtn) {
         alert('💾 Прогресс сохранён! Ты можешь вернуться к тесту позже.');
     });
 }
+// Переключение темы
+const themeToggle = document.getElementById('theme-toggle');
+const moonIcon = themeToggle?.querySelector('.fa-moon');
+const sunIcon = themeToggle?.querySelector('.fa-sun');
 
+function setTheme(theme) {
+    if (theme === 'light') {
+        document.body.classList.add('light-theme');
+        if (moonIcon) moonIcon.style.display = 'block';
+        if (sunIcon) sunIcon.style.display = 'none';
+        localStorage.setItem('theme', 'light');
+    } else {
+        document.body.classList.remove('light-theme');
+        if (moonIcon) moonIcon.style.display = 'none';
+        if (sunIcon) sunIcon.style.display = 'block';
+        localStorage.setItem('theme', 'dark');
+    }
+}
+
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'light') setTheme('light');
+else setTheme('dark');
+
+themeToggle?.addEventListener('click', () => {
+    const isLight = document.body.classList.contains('light-theme');
+    setTheme(isLight ? 'dark' : 'light');
+});
 init();
