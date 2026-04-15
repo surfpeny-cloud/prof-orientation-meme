@@ -38,11 +38,11 @@
             <p class="subtitle">Ответь на <strong id="total-questions-count">18</strong> вопросов с мемами и получи стратегию мечты</p>
             
             <div class="stats-row">
-    <div class="stat-chip"><i class="fas fa-brain"></i> 8 типов личности</div>
-    <div class="stat-chip"><i class="fas fa-chart-line"></i> 40+ профессий</div>
-    <div class="stat-chip"><i class="fas fa-calendar"></i> Стратегия на год</div>
-    <div class="stat-chip"><i class="fas fa-star"></i> ТОП-5 под ваш тип</div>
-</div>
+                <div class="stat-chip"><i class="fas fa-brain"></i> 8 типов личности</div>
+                <div class="stat-chip"><i class="fas fa-chart-line"></i> 40+ профессий</div>
+                <div class="stat-chip"><i class="fas fa-calendar"></i> Стратегия на год</div>
+                <div class="stat-chip"><i class="fas fa-star"></i> ТОП-5 под ваш тип</div>
+            </div>
             
             <button id="start-btn" class="btn-primary">
                 <i class="fas fa-rocket"></i> Начать тест
@@ -115,6 +115,11 @@
                 <div class="stats-grid" id="stats-grid"></div>
             </div>
 
+            <div class="rating-card">
+                <h3><i class="fas fa-chart-simple"></i> Топ-3 типа личности</h3>
+                <div id="rating-container"></div>
+            </div>
+
             <div class="section-header">
                 <i class="fas fa-trophy"></i>
                 <h3>ТОП-5 профессий для тебя</h3>
@@ -143,6 +148,25 @@
                 <button id="pdf-btn" class="btn-secondary">
                     <i class="fas fa-file-pdf"></i> Скачать PDF
                 </button>
+                <button id="cert-btn" class="btn-secondary">
+                    <i class="fas fa-certificate"></i> Сертификат
+                </button>
+                <button id="telegram-btn" class="btn-secondary">
+                    <i class="fab fa-telegram"></i> В Telegram
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для сертификата -->
+    <div id="name-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h3>🎓 Получи сертификат</h3>
+            <p>Введите ваше имя для сертификата:</p>
+            <input type="text" id="user-name" placeholder="Например: Анна" class="modal-input">
+            <div class="modal-buttons">
+                <button id="generate-cert-btn" class="btn-primary">Создать сертификат</button>
+                <button id="close-modal-btn" class="btn-secondary">Отмена</button>
             </div>
         </div>
     </div>
