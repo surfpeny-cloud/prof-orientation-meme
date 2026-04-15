@@ -17,17 +17,19 @@
 
         <!-- ПРИВЕТСТВИЕ -->
         <div id="welcome-screen" class="screen">
-            <div class="meme-emoji bounce">🎯🧠🔥</div>
+            <div class="meme-container">
+                <img id="welcome-meme" class="meme-image" src="memes/welcome.jpg" alt="Приветственный мем" onerror="this.src='https://via.placeholder.com/400x200?text=🎯+Кем+тебе+быть?'">
+            </div>
             <h1>Кем тебе <span class="gradient-text">быть</span>?</h1>
-            <p>Ответь на <strong id="total-questions">30</strong> вопросов с мемами и получи:</p>
+            <p>Ответь на вопросы с мемами и получи стратегию!</p>
             <ul class="features-list">
                 <li>✅ Твой тип личности с мем-диагнозом</li>
-                <li>✅ ТОП-5 профессий с уровнем сложности</li>
-                <li>✅ Пошаговую стратегию на год</li>
-                <li>✅ Список бесплатных курсов</li>
+                <li>✅ ТОП-5 профессий</li>
+                <li>✅ Пошаговая стратегия</li>
+                <li>✅ Бесплатные курсы</li>
             </ul>
             <button id="start-btn" class="btn-primary">🚀 Начать тест</button>
-            <button id="load-saved-btn" class="btn-text">📂 Продолжить сохранённый тест</button>
+            <button id="load-saved-btn" class="btn-text" style="display:none;">📂 Продолжить сохранённый тест</button>
         </div>
 
         <!-- ОСНОВНОЙ ТЕСТ -->
@@ -35,7 +37,6 @@
             <div class="quiz-header">
                 <div class="progress-info">
                     <span id="question-counter">0 / 0</span>
-                    <span id="score-badge" class="score-badge">🏆</span>
                 </div>
                 <div class="progress-bar">
                     <div id="progress-fill" class="progress-fill"></div>
@@ -44,22 +45,24 @@
             
             <div class="question-card">
                 <div class="meme-container" id="meme-container">
-                    <div class="meme-placeholder" id="meme-emoji">🤔</div>
+                    <img id="question-meme" class="question-meme" src="" alt="Мем" onerror="this.style.display='none'; document.getElementById('meme-emoji-fallback').style.display='block'">
+                    <div id="meme-emoji-fallback" class="meme-placeholder" style="display:none;">🤔</div>
                 </div>
                 <h2 id="question-text" class="question-text">Загрузка...</h2>
                 <div id="options-container" class="options-grid"></div>
             </div>
 
             <div class="quiz-footer">
-                <button id="prev-btn" class="btn-icon" style="display:none;">◀ Назад</button>
                 <button id="save-progress-btn" class="btn-text-small">💾 Сохранить прогресс</button>
             </div>
         </div>
 
-        <!-- ПРОМЕЖУТОЧНЫЙ РЕЗУЛЬТАТ (после 10 вопросов) -->
+        <!-- ПРОМЕЖУТОЧНЫЙ РЕЗУЛЬТАТ -->
         <div id="midpoint-screen" class="screen">
-            <div class="meme-emoji">⚡</div>
-            <h2>Ты уже на полпути!</h2>
+            <div class="meme-container">
+                <img src="memes/halfway.jpg" class="meme-image" alt="Ты на полпути" onerror="this.style.display='none'">
+            </div>
+            <h2>⚡ Ты уже на полпути!</h2>
             <div id="midpoint-stats"></div>
             <button id="continue-btn" class="btn-primary">Продолжить →</button>
         </div>
@@ -67,7 +70,8 @@
         <!-- ФИНАЛЬНЫЙ РЕЗУЛЬТАТ -->
         <div id="result-screen" class="screen">
             <div class="result-hero">
-                <div class="result-emoji" id="result-emoji">🏆</div>
+                <img id="result-meme" class="result-meme-image" src="" alt="Мем-диагноз" onerror="this.style.display='none'">
+                <div id="result-emoji-fallback" class="result-emoji">🏆</div>
                 <h2 id="meme-diagnosis"></h2>
             </div>
             
@@ -80,21 +84,21 @@
             <h3>🎯 ТОП-5 профессий для тебя</h3>
             <div id="top5-list" class="professions-list"></div>
 
-            <h3>🗺️ Стратегия развития на 12 месяцев</h3>
+            <h3>🗺️ Стратегия развития</h3>
             <div id="roadmap-list"></div>
 
-            <h3>📚 Бесплатные курсы для старта</h3>
+            <h3>📚 Бесплатные курсы</h3>
             <div id="courses-list" class="courses-list"></div>
 
             <div class="result-buttons">
                 <button id="restart-btn" class="btn-secondary">🔄 Пройти заново</button>
-                <button id="share-btn" class="btn-primary">📤 Поделиться результатом</button>
+                <button id="share-btn" class="btn-primary">📤 Поделиться</button>
                 <button id="pdf-btn" class="btn-secondary">📄 Скачать PDF</button>
             </div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="questions.js"></script>
     <script src="strategies.js"></script>
     <script src="utils.js"></script>
