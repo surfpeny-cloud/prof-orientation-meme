@@ -21,6 +21,8 @@ async function init() {
     
     const totalSpan = document.getElementById('total-q-num');
     if (totalSpan) totalSpan.textContent = currentQuestions.length;
+    const totalSpanWelcome = document.getElementById('total-questions-count');
+    if (totalSpanWelcome) totalSpanWelcome.textContent = currentQuestions.length;
     
     const savedProgress = loadProgress();
     const loadBtn = document.getElementById('load-saved-btn');
@@ -72,45 +74,6 @@ function startTest(resumeFromSave = false) {
     displayCurrentQuestion();
 }
 
-function animateElement(element, delay = 0) {
-    if (!element) return;
-    element.style.opacity = '0';
-    element.style.transform = 'translateY(20px)';
-    element.style.transition = `all 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1) ${delay}s`;
-    setTimeout(() => {
-        element.style.opacity = '1';
-        element.style.transform = 'translateY(0)';
-    }, 10);
-}
-
-function animateOptions() {
-    const options = document.querySelectorAll('.option-btn');
-    options.forEach((opt, idx) => {
-        animateElement(opt, idx * 0.05);
-    });
-}
-
-function showConfetti() {
-    const colors = ['#6C63FF', '#FF6584', '#00D2FF', '#FFD166', '#00E5A0'];
-    for (let i = 0; i < 60; i++) {
-        const confetti = document.createElement('div');
-        confetti.className = 'confetti';
-        confetti.style.left = Math.random() * 100 + '%';
-        confetti.style.animationDelay = Math.random() * 0.5 + 's';
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.position = 'fixed';
-        confetti.style.top = '-10px';
-        confetti.style.width = Math.random() * 10 + 4 + 'px';
-        confetti.style.height = Math.random() * 10 + 4 + 'px';
-        confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-        confetti.style.pointerEvents = 'none';
-        confetti.style.zIndex = '9999';
-        confetti.style.animation = `fall ${Math.random() * 1.5 + 1.5}s ease-in forwards`;
-        document.body.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 2500);
-    }
-}
-
 function displayCurrentQuestion() {
     const question = currentQuestions[currentQuestionIndex];
     if (!question) return;
@@ -160,7 +123,6 @@ function displayCurrentQuestion() {
         });
     }
     
-    setTimeout(() => animateOptions(), 50);
     saveProgress(currentQuestionIndex, userAnswers);
 }
 
@@ -195,8 +157,11 @@ function showMidpointScreen() {
                 <div class="stat-item"><div class="stat-value">${percentages.art || 0}%</div><div class="stat-label">Творческий</div></div>
                 <div class="stat-item"><div class="stat-value">${percentages.nature || 0}%</div><div class="stat-label">Природный</div></div>
                 <div class="stat-item"><div class="stat-value">${percentages.business || 0}%</div><div class="stat-label">Бизнес</div></div>
+                <div class="stat-item"><div class="stat-value">${percentages.researcher || 0}%</div><div class="stat-label">Исследователь</div></div>
+                <div class="stat-item"><div class="stat-value">${percentages.organizer || 0}%</div><div class="stat-label">Организатор</div></div>
+                <div class="stat-item"><div class="stat-value">${percentages.communicator || 0}%</div><div class="stat-label">Коммуникатор</div></div>
             </div>
-            <p style="margin-top: 16px;">🔥 Осталось совсем немного! Продолжай в том же духе.</p>
+            <p style="margin-top: 16px;">🔥 Осталось совсем немного! Продолжай!</p>
         `;
     }
     
@@ -249,7 +214,32 @@ function displayResults() {
             <div class="stat-item"><div class="stat-value">${currentResult.percentages.art || 0}%</div><div class="stat-label">Творческий</div></div>
             <div class="stat-item"><div class="stat-value">${currentResult.percentages.nature || 0}%</div><div class="stat-label">Природный</div></div>
             <div class="stat-item"><div class="stat-value">${currentResult.percentages.business || 0}%</div><div class="stat-label">Бизнес</div></div>
+            <div class="stat-item"><div class="stat-value">${currentResult.percentages.researcher || 0}%</div><div class="stat-label">Исследователь</div></div>
+            <div class="stat-item"><div class="stat-value">${currentResult.percentages.organizer || 0}%</div><div class="stat-label">Организатор</div></div>
+            <div class="stat-item"><div class="stat-value">${currentResult.percentages.communicator || 0}%</div><div class="stat-label">Коммуникатор</div></div>
         `;
+    }
+    
+    // Рейтинг
+    const ratingContainer = document.getElementById('rating-container');
+    if (ratingContainer) {
+        const stats = getTypeStats();
+        const total = getTotalParticipants();
+        if (total > 0) {
+            const sorted = Object.entries(stats).sort((a,b) => b[1] - a[1]);
+            let html = '<div class="rating-list">';
+            for (let [type, count] of sorted.slice(0,3)) {
+                const percent = Math.round((count / total) * 100);
+                html += `<div class="rating-item">
+                    <span>${STRATEGIES[type]?.emoji || '📌'} ${STRATEGIES[type]?.name || type}</span>
+                    <span>${percent}% (${count} чел.)</span>
+                </div>`;
+            }
+            html += '</div>';
+            ratingContainer.innerHTML = html;
+        } else {
+            ratingContainer.innerHTML = '<p>Пока нет данных. Будь первым!</p>';
+        }
     }
     
     const top5Container = document.getElementById('top5-list');
@@ -295,7 +285,6 @@ function displayResults() {
         });
     }
     
-    showConfetti();
     showScreen('result');
 }
 
@@ -309,51 +298,54 @@ function restartQuiz() {
 
 function shareResult() {
     if (!currentResult) return;
-    
     const text = `🧠 Я прошёл тест по профориентации!\n\n🎯 Мой тип: ${currentResult.diagnosis}\n✨ Суперсила: ${currentResult.superpower}\n\n🏆 ТОП-3 профессии:\n${currentResult.top5.slice(0,3).map(p => `• ${p.name}`).join('\n')}\n\n🔗 Пройди тест и ты: ${window.location.href}`;
     
     if (navigator.share) {
-        navigator.share({
-            title: 'Мой результат профориентации',
-            text: text,
-            url: window.location.href
-        }).catch(() => {
-            copyToClipboard(text);
-        });
+        navigator.share({ title: 'Мой результат', text: text, url: window.location.href }).catch(() => copyToClipboard(text));
     } else {
         copyToClipboard(text);
-        alert('📋 Текст скопирован! Поделись им с друзьями.');
     }
 }
 
 function copyToClipboard(text) {
-    navigator.clipboard.writeText(text).then(() => {
-        alert('📋 Результат скопирован! Можешь вставить его в чат.');
-    });
+    navigator.clipboard.writeText(text);
+    alert('📋 Результат скопирован!');
 }
 
 function downloadPDF() {
-    const resultElement = document.getElementById('result-screen');
-    if (resultElement) {
-        generatePDF('result-screen', `профориентация_${Date.now()}.pdf`);
-    }
+    const element = document.getElementById('result-screen');
+    if (element) generatePDF('result-screen', `профориентация_${Date.now()}.pdf`);
 }
 
-document.getElementById('start-btn')?.addEventListener('click', () => startTest(false));
-document.getElementById('load-saved-btn')?.addEventListener('click', () => startTest(true));
-document.getElementById('continue-btn')?.addEventListener('click', () => continueQuiz());
-document.getElementById('restart-btn')?.addEventListener('click', () => restartQuiz());
-document.getElementById('share-btn')?.addEventListener('click', () => shareResult());
-document.getElementById('pdf-btn')?.addEventListener('click', () => downloadPDF());
-
-const saveBtn = document.getElementById('save-progress-btn');
-if (saveBtn) {
-    saveBtn.addEventListener('click', () => {
-        saveProgress(currentQuestionIndex, userAnswers);
-        alert('💾 Прогресс сохранён! Ты можешь вернуться к тесту позже.');
-    });
+// Сертификат
+function generateCertificate(userName, resultType) {
+    const certHTML = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Сертификат</title><style>
+        body { margin:0; background:linear-gradient(135deg,#1a1a2e,#16213e); display:flex; justify-content:center; align-items:center; min-height:100vh; font-family:'Inter',sans-serif; }
+        .certificate { width:800px; height:600px; background:linear-gradient(135deg,#fff8e7,#fff); border:20px solid #6C63FF; border-radius:20px; text-align:center; padding:40px; position:relative; }
+        .certificate h1 { font-size:48px; color:#6C63FF; margin-top:60px; }
+        .certificate .name { font-size:36px; font-weight:bold; color:#FF6584; border-bottom:2px solid #FF6584; display:inline-block; padding:0 20px; margin:20px 0; }
+        .certificate .date { position:absolute; bottom:40px; right:40px; font-size:12px; color:#999; }
+        .certificate .seal { position:absolute; bottom:40px; left:40px; font-size:50px; }
+    </style></head><body>
+    <div class="certificate"><div class="seal">🎓</div><h1>СЕРТИФИКАТ</h1><p>Настоящим подтверждается, что</p><div class="name">${userName}</div><h2>${resultType.name}</h2><p>Успешно прошёл(а) тест по профориентации</p><div class="date">${new Date().toLocaleDateString('ru-RU')}</div></div>
+    </body></html>`;
+    const blob = new Blob([certHTML], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `сертификат_${userName}.html`;
+    a.click();
+    URL.revokeObjectURL(url);
 }
-// Переключение темы
+
+// Telegram
+document.getElementById('telegram-btn')?.addEventListener('click', () => {
+    if (!currentResult) return;
+    const text = `🧠 Результат профориентации!\n\n🎯 Мой тип: ${currentResult.diagnosis}\n✨ Суперсила: ${currentResult.superpower}\n\n🏆 ТОП-3 профессии:\n${currentResult.top5.slice(0,3).map(p => `• ${p.name}`).join('\n')}`;
+    window.open(`https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(text)}`, '_blank');
+});
+
+// Тёмная/светлая тема
 const themeToggle = document.getElementById('theme-toggle');
 const moonIcon = themeToggle?.querySelector('.fa-moon');
 const sunIcon = themeToggle?.querySelector('.fa-sun');
@@ -380,4 +372,149 @@ themeToggle?.addEventListener('click', () => {
     const isLight = document.body.classList.contains('light-theme');
     setTheme(isLight ? 'dark' : 'light');
 });
+
+// Навешиваем обработчики
+document.getElementById('start-btn')?.addEventListener('click', () => startTest(false));
+document.getElementById('load-saved-btn')?.addEventListener('click', () => startTest(true));
+document.getElementById('continue-btn')?.addEventListener('click', () => continueQuiz());
+document.getElementById('restart-btn')?.addEventListener('click', () => restartQuiz());
+document.getElementById('share-btn')?.addEventListener('click', () => shareResult());
+document.getElementById('pdf-btn')?.addEventListener('click', () => downloadPDF());
+
+const saveBtn = document.getElementById('save-progress-btn');
+if (saveBtn) {
+    saveBtn.addEventListener('click', () => {
+        saveProgress(currentQuestionIndex, userAnswers);
+        alert('💾 Прогресс сохранён!');
+    });
+}
+
+// Сертификат модальное окно
+const certBtn = document.getElementById('cert-btn');
+if (certBtn) {
+    certBtn.addEventListener('click', () => {
+        const modal = document.getElementById('name-modal');
+        if (modal) modal.style.display = 'flex';
+    });
+}
+
+document.getElementById('generate-cert-btn')?.addEventListener('click', () => {
+    const userName = document.getElementById('user-name').value.trim();
+    if (userName && currentResult) {
+        generateCertificate(userName, currentResult);
+        document.getElementById('name-modal').style.display = 'none';
+    } else {
+        alert('Пожалуйста, введите ваше имя');
+    }
+});
+
+document.getElementById('close-modal-btn')?.addEventListener('click', () => {
+    document.getElementById('name-modal').style.display = 'none';
+});
+
+// ========== ЧАТ-БОТ С DEEPSEEK ==========
+function createChatUI() {
+    const toggleBtn = document.createElement('button');
+    toggleBtn.id = 'chat-toggle';
+    toggleBtn.className = 'chat-toggle';
+    toggleBtn.innerHTML = '<i class="fas fa-comment-dots"></i>';
+    document.body.appendChild(toggleBtn);
+    
+    const chatWindow = document.createElement('div');
+    chatWindow.id = 'chat-window';
+    chatWindow.className = 'chat-window';
+    chatWindow.style.display = 'none';
+    chatWindow.innerHTML = `
+        <div class="chat-header">
+            <span><i class="fas fa-robot"></i> DeepSeek — Карьерный консультант</span>
+            <button id="chat-close" class="chat-close">✕</button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <div class="chat-message bot">🤖 Привет! Я ИИ-консультант по карьере. Задавай любые вопросы о профессиях, образовании, зарплатах — я помогу!</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="chat-input" placeholder="Напиши свой вопрос...">
+            <button id="chat-send"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    `;
+    document.body.appendChild(chatWindow);
+    return { toggleBtn, chatWindow };
+}
+
+const { toggleBtn, chatWindow } = createChatUI();
+const chatClose = document.getElementById('chat-close');
+const chatSend = document.getElementById('chat-send');
+const chatInput = document.getElementById('chat-input');
+const chatMessages = document.getElementById('chat-messages');
+
+let isTyping = false;
+
+function addChatMessage(text, isUser = false) {
+    const msg = document.createElement('div');
+    msg.className = `chat-message ${isUser ? 'user' : 'bot'}`;
+    msg.textContent = text;
+    chatMessages.appendChild(msg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function showTyping() {
+    if (isTyping) return;
+    isTyping = true;
+    const typing = document.createElement('div');
+    typing.className = 'chat-message bot typing-indicator';
+    typing.id = 'typing-indicator';
+    typing.innerHTML = '<span>.</span><span>.</span><span>.</span>';
+    chatMessages.appendChild(typing);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function hideTyping() {
+    isTyping = false;
+    const el = document.getElementById('typing-indicator');
+    if (el) el.remove();
+}
+
+async function sendChatMessage() {
+    const message = chatInput.value.trim();
+    if (!message) return;
+    
+    chatInput.value = '';
+    addChatMessage(message, true);
+    showTyping();
+    
+    try {
+        const response = await fetch('/api/deepseek', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message, history: [] })
+        });
+        
+        const data = await response.json();
+        hideTyping();
+        
+        if (data.reply) {
+            addChatMessage(data.reply, false);
+        } else {
+            addChatMessage('😔 Ошибка. Попробуй ещё раз.', false);
+        }
+    } catch (err) {
+        hideTyping();
+        addChatMessage('🔌 Ошибка соединения. Попробуй позже.', false);
+    }
+}
+
+toggleBtn?.addEventListener('click', () => {
+    const isVisible = chatWindow.style.display === 'flex';
+    chatWindow.style.display = isVisible ? 'none' : 'flex';
+});
+
+chatClose?.addEventListener('click', () => {
+    chatWindow.style.display = 'none';
+});
+
+chatSend?.addEventListener('click', sendChatMessage);
+chatInput?.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendChatMessage();
+});
+
 init();
