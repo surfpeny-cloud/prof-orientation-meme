@@ -1,8 +1,7 @@
 {
   "version": 2,
   "functions": {
-    "api/deepseek.js": {
-      "memory": 1024,
+    "api/yandexgpt.js": {
       "maxDuration": 10
     }
   },
