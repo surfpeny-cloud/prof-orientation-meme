@@ -1,9 +1,9 @@
-// ========== БАЗА ВОПРОСОВ (30+ штук) ==========
+// ========== БАЗА ВОПРОСОВ С РЕАЛЬНЫМИ МЕМАМИ ==========
 const QUESTIONS_DB = [
-    // Вопрос 1
     {
         id: 1,
         text: "🤖 Что ты делаешь, когда видишь сломанный автомат с кофе?",
+        memeUrl: "memes/coffee-meme.jpg",
         memeEmoji: "☕🔧",
         category: "reaction",
         options: [
@@ -13,24 +13,24 @@ const QUESTIONS_DB = [
             { text: "Ухожу в другой автомат, не парюсь", emoji: "🚶", scores: { tech: 0, human: 0, art: 0, nature: 2, business: 0 } }
         ]
     },
-    // Вопрос 2
     {
         id: 2,
         text: "💭 Твой идеальный рабочий день — это...",
+        memeUrl: "memes/perfect-day.jpg",
         memeEmoji: "💭✨",
         category: "preference",
         options: [
-            { text: "Сижу в наушниках, пишу код/текст, никто не трогает", emoji: "💻", scores: { tech: 3, human: 0, art: 1, nature: 0, business: 0 } },
+            { text: "Сижу в наушниках, пишу код, никто не трогает", emoji: "💻", scores: { tech: 3, human: 0, art: 1, nature: 0, business: 0 } },
             { text: "Общаюсь с людьми, решаю их проблемы", emoji: "🤝", scores: { tech: 0, human: 3, art: 0, nature: 0, business: 2 } },
             { text: "Рисую/создаю что-то красивое", emoji: "🎨", scores: { tech: 0, human: 0, art: 3, nature: 1, business: 0 } },
             { text: "Работаю на свежем воздухе", emoji: "🌿", scores: { tech: 0, human: 0, art: 1, nature: 3, business: 0 } },
             { text: "Управляю проектами и командой", emoji: "📊", scores: { tech: 0, human: 2, art: 0, nature: 0, business: 3 } }
         ]
     },
-    // Вопрос 3
     {
         id: 3,
         text: "⚡ Как ты реагируешь на сложную задачу?",
+        memeUrl: "memes/drake-meme.jpg",
         memeEmoji: "⚡🤔",
         category: "problem_solving",
         options: [
@@ -41,10 +41,10 @@ const QUESTIONS_DB = [
             { text: "Забиваю, откладываю на потом", emoji: "😴", scores: { tech: 0, human: 0, art: 0, nature: 0, business: 0 } }
         ]
     },
-    // Вопрос 4
     {
         id: 4,
         text: "💰 Что для тебя важнее всего в работе?",
+        memeUrl: "memes/money-meme.jpg",
         memeEmoji: "💰💎",
         category: "values",
         options: [
@@ -55,10 +55,10 @@ const QUESTIONS_DB = [
             { text: "Помощь людям и польза обществу", emoji: "❤️", scores: { tech: 0, human: 3, art: 0, nature: 2, business: 0 } }
         ]
     },
-    // Вопрос 5
     {
         id: 5,
         text: "🎮 В какую игру ты бы поиграл прямо сейчас?",
+        memeUrl: "memes/gaming-meme.jpg",
         memeEmoji: "🎮🕹️",
         category: "hobby",
         options: [
@@ -69,10 +69,10 @@ const QUESTIONS_DB = [
             { text: "Спортивные или гонки (FIFA, Forza)", emoji: "⚽", scores: { tech: 0, human: 2, art: 0, nature: 1, business: 1 } }
         ]
     },
-    // Вопрос 6
     {
         id: 6,
         text: "📚 Какую книгу ты выберешь?",
+        memeUrl: "memes/books-meme.jpg",
         memeEmoji: "📚🤓",
         category: "hobby",
         options: [
@@ -83,10 +83,10 @@ const QUESTIONS_DB = [
             { text: "Художественную классику", emoji: "🎭", scores: { tech: 0, human: 2, art: 2, nature: 1, business: 0 } }
         ]
     },
-    // Вопрос 7
     {
         id: 7,
         text: "🏢 В какой компании ты хотел бы работать?",
+        memeUrl: "memes/office-meme.jpg",
         memeEmoji: "🏢⭐",
         category: "preference",
         options: [
@@ -97,10 +97,10 @@ const QUESTIONS_DB = [
             { text: "В НКО или госсекторе (помощь людям)", emoji: "🤲", scores: { tech: 0, human: 3, art: 0, nature: 2, business: 0 } }
         ]
     },
-    // Вопрос 8
     {
         id: 8,
         text: "🧠 Какая задача тебя заводит?",
+        memeUrl: "memes/brain-meme.jpg",
         memeEmoji: "🧠⚡",
         category: "motivation",
         options: [
@@ -111,10 +111,10 @@ const QUESTIONS_DB = [
             { text: "Помочь кому-то решить проблему", emoji: "🫂", scores: { tech: 0, human: 3, art: 0, nature: 1, business: 0 } }
         ]
     },
-    // Вопрос 9
     {
         id: 9,
         text: "🎬 Какой жанр фильма ты выберешь?",
+        memeUrl: "memes/movies-meme.jpg",
         memeEmoji: "🎬🍿",
         category: "hobby",
         options: [
@@ -125,10 +125,10 @@ const QUESTIONS_DB = [
             { text: "Драма (про людей и чувства)", emoji: "🎭", scores: { tech: 0, human: 3, art: 1, nature: 0, business: 0 } }
         ]
     },
-    // Вопрос 10
     {
         id: 10,
         text: "🛠️ Что ты делаешь в свободное время?",
+        memeUrl: "memes/freetime-meme.jpg",
         memeEmoji: "🛠️🎨",
         category: "hobby",
         options: [
@@ -141,11 +141,12 @@ const QUESTIONS_DB = [
     }
 ];
 
-// Дополнительные вопросы (для расширения до 30)
+// Дополнительные вопросы
 const MORE_QUESTIONS = [
     {
         id: 11,
         text: "🧩 Что тебе нравится собирать?",
+        memeUrl: "memes/puzzle-meme.jpg",
         memeEmoji: "🧩",
         category: "hobby",
         options: [
@@ -158,6 +159,7 @@ const MORE_QUESTIONS = [
     {
         id: 12,
         text: "💬 Какую соцсеть ты любишь больше всего?",
+        memeUrl: "memes/social-meme.jpg",
         memeEmoji: "📱",
         category: "hobby",
         options: [
@@ -167,19 +169,6 @@ const MORE_QUESTIONS = [
             { text: "YouTube (обучение)", emoji: "▶️", scores: { tech: 2, human: 1, art: 2, nature: 0, business: 1 } },
             { text: "Reddit / Twitter", emoji: "🐦", scores: { tech: 1, human: 2, art: 1, nature: 0, business: 1 } }
         ]
-    },
-    {
-        id: 13,
-        text: "🧘 Как ты справляешься со стрессом?",
-        memeEmoji: "🧘",
-        category: "reaction",
-        options: [
-            { text: "Ухожу в работу/учёбу", emoji: "💻", scores: { tech: 2, human: 0, art: 0, nature: 0, business: 2 } },
-            { text: "Говорю с друзьями", emoji: "🗣️", scores: { tech: 0, human: 3, art: 0, nature: 0, business: 0 } },
-            { text: "Творю (рисую, музыка)", emoji: "🎨", scores: { tech: 0, human: 0, art: 3, nature: 1, business: 0 } },
-            { text: "Иду на природу", emoji: "🌲", scores: { tech: 0, human: 0, art: 0, nature: 3, business: 0 } },
-            { text: "Планирую и структурирую", emoji: "📋", scores: { tech: 1, human: 0, art: 0, nature: 0, business: 2 } }
-        ]
     }
 ];
 
@@ -187,7 +176,7 @@ const MORE_QUESTIONS = [
 const ALL_QUESTIONS = [...QUESTIONS_DB, ...MORE_QUESTIONS];
 
 // Функция для получения рандомных N вопросов
-function getRandomQuestions(count = 15) {
+function getRandomQuestions(count = 12) {
     const shuffled = [...ALL_QUESTIONS];
     for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
