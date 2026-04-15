@@ -662,3 +662,66 @@ h3 {
     z-index: 9999;
     animation: fall 2s ease-in forwards;
 }
+
+/* Переключатель темы */
+.theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Светлая тема */
+body.light-theme {
+    background: radial-gradient(ellipse at 20% 30%, #f0f4ff, #e8ecf5);
+}
+
+body.light-theme .app-container {
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme h1, 
+body.light-theme h2, 
+body.light-theme .profession-name {
+    color: #1a1a2e;
+}
+
+body.light-theme .question-card,
+body.light-theme .profession-card,
+body.light-theme .roadmap-step {
+    background: rgba(0, 0, 0, 0.02);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+body.light-theme .option-btn {
+    background: white;
+    border: 1px solid #e0e0e0;
+    color: #333;
+}
+
+body.light-theme .option-btn:hover {
+    background: #f0f0ff;
+    border-color: var(--primary);
+}
+
+body.light-theme .stat-chip {
+    background: rgba(0, 0, 0, 0.03);
+    color: #555;
+}
