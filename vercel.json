@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "functions": {
+    "api/deepseek.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
