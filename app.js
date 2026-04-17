@@ -127,20 +127,15 @@ function displayCurrentQuestion() {
 }
 
 function selectAnswer(optionIndex) {
-    // Сохраняем ответ
     userAnswers[currentQuestionIndex] = optionIndex;
     saveProgress(currentQuestionIndex, userAnswers);
     
-    // Проверяем, был ли это последний вопрос
     if (currentQuestionIndex + 1 >= currentQuestions.length) {
-        // Последний вопрос — завершаем тест
         finishQuiz();
     } else {
-        // Переход к следующему вопросу
         currentQuestionIndex++;
         displayCurrentQuestion();
         
-        // Показываем промежуточный экран на полпути
         if (currentQuestionIndex === Math.floor(currentQuestions.length / 2)) {
             showMidpointScreen();
         }
@@ -180,9 +175,6 @@ function continueQuiz() {
 }
 
 function finishQuiz() {
-    console.log('Тест завершён! Количество ответов:', userAnswers.length);
-    
-    // Подсчитываем результаты
     const scores = calculateScores(userAnswers, currentQuestions);
     const strategy = getDominantType(scores);
     const percentages = getPercentages(scores);
@@ -196,13 +188,10 @@ function finishQuiz() {
         courses: strategy.courses || []
     };
     
-    // Сохраняем результат
     saveResult(currentResult);
     incrementQuizCount();
     recordResultType(strategy.name);
     clearProgress();
-    
-    // Показываем результат
     displayResults();
 }
 
@@ -235,25 +224,38 @@ function displayResults() {
     // Рейтинг
     const ratingContainer = document.getElementById('rating-container');
     if (ratingContainer) {
-        const stats = getTypeStats();
-        const total = getTotalParticipants();
-        if (total > 0) {
-            const sorted = Object.entries(stats).sort((a,b) => b[1] - a[1]);
-            let html = '<div class="rating-list">';
-            for (let [type, count] of sorted.slice(0,3)) {
-                const percent = Math.round((count / total) * 100);
-                html += `<div class="rating-item">
-                    <span>${STRATEGIES[type]?.emoji || '📌'} ${STRATEGIES[type]?.name || type}</span>
-                    <span>${percent}% (${count} чел.)</span>
-                </div>`;
+        try {
+            const stats = getTypeStats();
+            let total = 0;
+            for (let key in stats) {
+                total += stats[key];
             }
-            html += '</div>';
-            ratingContainer.innerHTML = html;
-        } else {
-            ratingContainer.innerHTML = '<p>Пока нет данных. Будь первым!</p>';
+            
+            if (total > 0) {
+                const sorted = Object.entries(stats).sort((a,b) => b[1] - a[1]);
+                let html = '<div class="rating-list">';
+                for (let [type, count] of sorted.slice(0,3)) {
+                    const percent = Math.round((count / total) * 100);
+                    let typeName = type;
+                    if (window.STRATEGIES && window.STRATEGIES[type]) {
+                        typeName = window.STRATEGIES[type].name;
+                    }
+                    html += `<div class="rating-item">
+                        <span>${typeName}</span>
+                        <span>${percent}% (${count} чел.)</span>
+                    </div>`;
+                }
+                html += '</div>';
+                ratingContainer.innerHTML = html;
+            } else {
+                ratingContainer.innerHTML = '<p>⭐ Будь первым, кто пройдёт тест!</p>';
+            }
+        } catch(e) {
+            ratingContainer.innerHTML = '<p>⭐ Рейтинг появится после прохождения теста</p>';
         }
     }
     
+    // ТОП-5 профессий
     const top5Container = document.getElementById('top5-list');
     if (top5Container && currentResult.top5) {
         top5Container.innerHTML = '';
@@ -269,6 +271,7 @@ function displayResults() {
         });
     }
     
+    // Стратегия
     const roadmapContainer = document.getElementById('roadmap-list');
     if (roadmapContainer && currentResult.roadmap) {
         roadmapContainer.innerHTML = '';
@@ -284,6 +287,7 @@ function displayResults() {
         });
     }
     
+    // Курсы
     const coursesContainer = document.getElementById('courses-list');
     if (coursesContainer && currentResult.courses) {
         coursesContainer.innerHTML = '';
@@ -326,7 +330,39 @@ function copyToClipboard(text) {
 
 function downloadPDF() {
     const element = document.getElementById('result-screen');
-    if (element) generatePDF('result-screen', `профориентация_${Date.now()}.pdf`);
+    if (element && typeof generatePDF === 'function') {
+        generatePDF('result-screen', `профориентация_${Date.now()}.pdf`);
+    } else {
+        alert('Функция генерации PDF временно недоступна');
+    }
+}
+
+// ========== ФУНКЦИИ ДЛЯ РЕЙТИНГА ==========
+function getTypeStats() {
+    const stats = localStorage.getItem('prof_stats');
+    if (stats) {
+        try {
+            return JSON.parse(stats);
+        } catch(e) {
+            return {};
+        }
+    }
+    return {};
+}
+
+function getTotalParticipants() {
+    const stats = getTypeStats();
+    let total = 0;
+    for (let key in stats) {
+        total += stats[key];
+    }
+    return total;
+}
+
+function recordResultType(typeName) {
+    const stats = getTypeStats();
+    stats[typeName] = (stats[typeName] || 0) + 1;
+    localStorage.setItem('prof_stats', JSON.stringify(stats));
 }
 
 // Сертификат
@@ -424,7 +460,7 @@ document.getElementById('close-modal-btn')?.addEventListener('click', () => {
     document.getElementById('name-modal').style.display = 'none';
 });
 
-// ========== ЧАТ-БОТ С DEEPSEEK ==========
+// ========== ЧАТ-БОТ ==========
 function createChatUI() {
     const toggleBtn = document.createElement('button');
     toggleBtn.id = 'chat-toggle';
@@ -438,11 +474,11 @@ function createChatUI() {
     chatWindow.style.display = 'none';
     chatWindow.innerHTML = `
         <div class="chat-header">
-            <span><i class="fas fa-robot"></i> DeepSeek — Карьерный консультант</span>
+            <span><i class="fas fa-robot"></i> Карьерный консультант</span>
             <button id="chat-close" class="chat-close">✕</button>
         </div>
         <div id="chat-messages" class="chat-messages">
-            <div class="chat-message bot">🤖 Привет! Я ИИ-консультант по карьере. Задавай любые вопросы о профессиях, образовании, зарплатах — я помогу!</div>
+            <div class="chat-message bot">🤖 Привет! Я консультант по карьере. Задавай любые вопросы о профессиях, образовании, зарплатах!</div>
         </div>
         <div class="chat-input">
             <input type="text" id="chat-input" placeholder="Напиши свой вопрос...">
@@ -495,7 +531,6 @@ async function sendChatMessage() {
     showTyping();
     
     try {
-        // ВАЖНО: запрос идёт на /api/yandexgpt
         const response = await fetch('/api/yandexgpt', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -515,7 +550,7 @@ async function sendChatMessage() {
     } catch (err) {
         hideTyping();
         addChatMessage('🔌 Ошибка соединения. Проверь интернет.', false);
-        console.error('Chat error:', err);
+        console.error(err);
     }
 }
 
