@@ -1,12 +1,10 @@
-// ========== 18 ВОПРОСОВ ДЛЯ 8 ТИПОВ ЛИЧНОСТИ ==========
-// Типы: tech, human, art, nature, business, researcher, organizer, communicator
+// ========== 18 ВОПРОСОВ С ПУТЯМИ К КАРТИНКАМ ==========
 
 const QUESTIONS_DB = [
-    // ВОПРОС 1
     {
         id: 1,
         text: "📱 Ты залипаешь в телефоне. Что ты чаще всего смотришь?",
-        memeUrl: "memes/phone-meme.jpg",
+        memeUrl: "memes/q1-phone.jpg",
         memeEmoji: "📱",
         options: [
             { text: "Разборки техники, обзоры гаджетов", emoji: "🔧", scores: { tech: 3, researcher: 1 } },
@@ -16,11 +14,10 @@ const QUESTIONS_DB = [
             { text: "Бизнес-каналы, успешный успех", emoji: "💼", scores: { business: 3, communicator: 1 } }
         ]
     },
-    // ВОПРОС 2
     {
         id: 2,
         text: "🧩 Ты застрял в лифте один на час. Что будешь делать?",
-        memeUrl: "memes/elevator-meme.jpg",
+        memeUrl: "memes/q2-elevator.jpg",
         memeEmoji: "🛗",
         options: [
             { text: "Попытаюсь открыть двери или вызвать помощь", emoji: "🔧", scores: { tech: 2, organizer: 2 } },
@@ -30,11 +27,10 @@ const QUESTIONS_DB = [
             { text: "Сразу позвоню диспетчеру", emoji: "📊", scores: { business: 2, organizer: 2 } }
         ]
     },
-    // ВОПРОС 3
     {
         id: 3,
         text: "🎁 Тебе подарили 10 000 ₽ на саморазвитие. Куда потратишь?",
-        memeUrl: "memes/gift-meme.jpg",
+        memeUrl: "memes/q3-gift.jpg",
         memeEmoji: "🎁",
         options: [
             { text: "Курс по Python или Data Science", emoji: "💻", scores: { tech: 3, researcher: 2 } },
@@ -44,11 +40,10 @@ const QUESTIONS_DB = [
             { text: "Курс по управлению проектами", emoji: "📈", scores: { business: 3, organizer: 2 } }
         ]
     },
-    // ВОПРОС 4
     {
         id: 4,
         text: "💼 Начальник даёт задачу без чёткого ТЗ. Твои действия?",
-        memeUrl: "memes/boss-meme.jpg",
+        memeUrl: "memes/q4-boss.jpg",
         memeEmoji: "👔",
         options: [
             { text: "Задаю уточняющие вопросы", emoji: "📋", scores: { tech: 2, researcher: 2, organizer: 1 } },
@@ -58,11 +53,10 @@ const QUESTIONS_DB = [
             { text: "Беру инициативу и предлагаю план", emoji: "🚀", scores: { business: 3, organizer: 2 } }
         ]
     },
-    // ВОПРОС 5
     {
         id: 5,
         text: "🔄 Ты нашёл способ автоматизировать работу. Что чувствуешь?",
-        memeUrl: "memes/auto-meme.jpg",
+        memeUrl: "memes/q5-auto.jpg",
         memeEmoji: "🤖",
         options: [
             { text: "Эйфорию! Буду оптимизировать всё", emoji: "🤩", scores: { tech: 3, business: 1, organizer: 2 } },
@@ -71,11 +65,10 @@ const QUESTIONS_DB = [
             { text: "Поделюсь с коллегами", emoji: "🤝", scores: { human: 3, communicator: 2 } }
         ]
     },
-    // ВОПРОС 6
     {
         id: 6,
         text: "🎨 Ты увидел пустую стену в офисе. Что сделаешь?",
-        memeUrl: "memes/wall-meme.jpg",
+        memeUrl: "memes/q6-wall.jpg",
         memeEmoji: "🖌️",
         options: [
             { text: "Повешу доску для заметок и KPI", emoji: "📊", scores: { business: 2, organizer: 3 } },
@@ -85,11 +78,10 @@ const QUESTIONS_DB = [
             { text: "Сделаю стену для стикеров с идеями", emoji: "💡", scores: { tech: 2, communicator: 2 } }
         ]
     },
-    // ВОПРОС 7
     {
         id: 7,
         text: "🎵 Какую музыку включишь для фона во время работы?",
-        memeUrl: "memes/music-meme.jpg",
+        memeUrl: "memes/q7-music.jpg",
         memeEmoji: "🎧",
         options: [
             { text: "Lofi hip-hop или инструментал", emoji: "🎹", scores: { tech: 1, art: 2, researcher: 1 } },
@@ -99,11 +91,10 @@ const QUESTIONS_DB = [
             { text: "Тишина", emoji: "🤫", scores: { nature: 2, organizer: 1, researcher: 1 } }
         ]
     },
-    // ВОПРОС 8
     {
         id: 8,
         text: "👥 Какую роль ты чаще берёшь в групповом проекте?",
-        memeUrl: "memes/team-meme.jpg",
+        memeUrl: "memes/q8-team.jpg",
         memeEmoji: "🤝",
         options: [
             { text: "Генератор идей и креатива", emoji: "💡", scores: { art: 3, communicator: 1 } },
@@ -113,11 +104,10 @@ const QUESTIONS_DB = [
             { text: "Миротворец и дипломат", emoji: "🕊️", scores: { human: 3, communicator: 1 } }
         ]
     },
-    // ВОПРОС 9
     {
         id: 9,
         text: "😤 Как ты справляешься с выгоранием?",
-        memeUrl: "memes/burnout-meme.jpg",
+        memeUrl: "memes/q9-burnout.jpg",
         memeEmoji: "😫",
         options: [
             { text: "Ухожу в работу с головой", emoji: "💻", scores: { tech: 1, business: 1, organizer: 2 } },
@@ -127,11 +117,10 @@ const QUESTIONS_DB = [
             { text: "Делаю план и структурирую", emoji: "📋", scores: { organizer: 3, researcher: 1 } }
         ]
     },
-    // ВОПРОС 10
     {
         id: 10,
         text: "🏆 Что для тебя главный признак успеха?",
-        memeUrl: "memes/success-meme.jpg",
+        memeUrl: "memes/q10-success.jpg",
         memeEmoji: "🏆",
         options: [
             { text: "Высокая зарплата", emoji: "💰", scores: { business: 3, tech: 1 } },
@@ -141,11 +130,10 @@ const QUESTIONS_DB = [
             { text: "Возможность творить", emoji: "🎨", scores: { art: 3, researcher: 1 } }
         ]
     },
-    // ВОПРОС 11
     {
         id: 11,
         text: "🤖 Как ты относишься к нейросетям?",
-        memeUrl: "memes/ai-meme.jpg",
+        memeUrl: "memes/q11-ai.jpg",
         memeEmoji: "🤖",
         options: [
             { text: "Обожаю! Инструмент для творчества", emoji: "❤️", scores: { art: 2, tech: 2, communicator: 1 } },
@@ -155,11 +143,10 @@ const QUESTIONS_DB = [
             { text: "Не доверяю, лучше самому", emoji: "🔧", scores: { tech: 2, organizer: 1 } }
         ]
     },
-    // ВОПРОС 12
     {
         id: 12,
         text: "🚀 Какая фраза лучше описывает твои амбиции?",
-        memeUrl: "memes/ambition-meme.jpg",
+        memeUrl: "memes/q12-ambition.jpg",
         memeEmoji: "⭐",
         options: [
             { text: "Хочу стать экспертом в своём деле", emoji: "🧠", scores: { tech: 2, researcher: 3, organizer: 1 } },
@@ -169,11 +156,10 @@ const QUESTIONS_DB = [
             { text: "Хочу жить в гармонии с природой", emoji: "🌍", scores: { nature: 3, human: 1 } }
         ]
     },
-    // ВОПРОС 13
     {
         id: 13,
         text: "🧪 Ты в лаборатории. Что тебе интереснее?",
-        memeUrl: "memes/lab-meme.jpg",
+        memeUrl: "memes/q13-lab.jpg",
         memeEmoji: "🔬",
         options: [
             { text: "Ставить опыты и анализировать", emoji: "📊", scores: { tech: 2, researcher: 3, organizer: 1 } },
@@ -183,11 +169,10 @@ const QUESTIONS_DB = [
             { text: "Рассказывать о научных открытиях", emoji: "🎙️", scores: { communicator: 3, human: 1 } }
         ]
     },
-    // ВОПРОС 14
     {
         id: 14,
         text: "🏥 Ты в больнице. Какую роль выберешь?",
-        memeUrl: "memes/doctor-meme.jpg",
+        memeUrl: "memes/q14-doctor.jpg",
         memeEmoji: "🩺",
         options: [
             { text: "Врач — лечить людей", emoji: "👨‍⚕️", scores: { human: 3, nature: 1, researcher: 1 } },
@@ -197,11 +182,10 @@ const QUESTIONS_DB = [
             { text: "Волонтёр — поддерживать морально", emoji: "❤️", scores: { human: 2, nature: 1, communicator: 1 } }
         ]
     },
-    // ВОПРОС 15
     {
         id: 15,
         text: "📈 Твой друг хочет открыть бизнес. Что посоветуешь?",
-        memeUrl: "memes/business-meme.jpg",
+        memeUrl: "memes/q15-business.jpg",
         memeEmoji: "💡",
         options: [
             { text: "Составь бизнес-план и проанализируй рынок", emoji: "📊", scores: { business: 3, researcher: 2, organizer: 1 } },
@@ -211,11 +195,10 @@ const QUESTIONS_DB = [
             { text: "Подумай об экологичности", emoji: "🌿", scores: { nature: 2, business: 1 } }
         ]
     },
-    // ВОПРОС 16
     {
         id: 16,
         text: "🌍 Что тебя больше всего волнует в мире?",
-        memeUrl: "memes/planet-meme.jpg",
+        memeUrl: "memes/q16-planet.jpg",
         memeEmoji: "🌍",
         options: [
             { text: "Технологическое развитие", emoji: "🤖", scores: { tech: 3, researcher: 2 } },
@@ -225,11 +208,10 @@ const QUESTIONS_DB = [
             { text: "Культура и искусство", emoji: "🎨", scores: { art: 3, communicator: 1 } }
         ]
     },
-    // ВОПРОС 17
     {
         id: 17,
         text: "🧘 Что ты делаешь для восстановления сил?",
-        memeUrl: "memes/rest-meme.jpg",
+        memeUrl: "memes/q17-rest.jpg",
         memeEmoji: "😴",
         options: [
             { text: "Изучаю что-то новое", emoji: "📚", scores: { tech: 2, researcher: 3 } },
@@ -239,11 +221,10 @@ const QUESTIONS_DB = [
             { text: "Планирую будущее", emoji: "📊", scores: { business: 2, organizer: 2 } }
         ]
     },
-    // ВОПРОС 18
     {
         id: 18,
         text: "🎯 Какую цель ты ставишь на ближайший год?",
-        memeUrl: "memes/goal-meme.jpg",
+        memeUrl: "memes/q18-goal.jpg",
         memeEmoji: "🎯",
         options: [
             { text: "Научиться программировать", emoji: "💻", scores: { tech: 3, researcher: 1 } },
@@ -258,13 +239,11 @@ const QUESTIONS_DB = [
 // Все вопросы
 const ALL_QUESTIONS = QUESTIONS_DB;
 
-// Функция для получения всех вопросов (или случайных, если нужно меньше)
+// Функция для получения всех вопросов
 function getRandomQuestions(count = 18) {
-    // Если запрошено 18 или больше — возвращаем все вопросы
     if (count >= ALL_QUESTIONS.length) {
         return [...ALL_QUESTIONS];
     }
-    // Если нужно меньше — перемешиваем и берём первые count
     const shuffled = [...ALL_QUESTIONS];
     for (let i = shuffled.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
