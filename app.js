@@ -483,8 +483,8 @@ async function sendChatMessage() {
     showTyping();
     
     try {
-        // ВАЖНО: теперь запрос идёт на YandexGPT, а не на DeepSeek
-        const response = await fetch('/api/gemini', {
+        // ВАЖНО: запрос идёт на /api/yandexgpt
+        const response = await fetch('/api/yandexgpt', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message, history: [] })
@@ -496,13 +496,13 @@ async function sendChatMessage() {
         if (data.reply) {
             addChatMessage(data.reply, false);
         } else if (data.error) {
-            addChatMessage(`😔 Ошибка: ${data.error}. Попробуй позже.`, false);
+            addChatMessage(`😔 Ошибка: ${data.error}`, false);
         } else {
             addChatMessage('😔 Неизвестная ошибка. Попробуй ещё раз.', false);
         }
     } catch (err) {
         hideTyping();
-        addChatMessage('🔌 Ошибка соединения. Проверь интернет и попробуй позже.', false);
+        addChatMessage('🔌 Ошибка соединения. Проверь интернет.', false);
         console.error('Chat error:', err);
     }
 }
