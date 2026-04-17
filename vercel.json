@@ -1,7 +1,7 @@
 {
   "version": 2,
   "functions": {
-    "api/gemini.js": {
+    "api/yandexgpt.js": {
       "maxDuration": 10
     }
   },
