@@ -127,17 +127,23 @@ function displayCurrentQuestion() {
 }
 
 function selectAnswer(optionIndex) {
+    // Сохраняем ответ
     userAnswers[currentQuestionIndex] = optionIndex;
+    saveProgress(currentQuestionIndex, userAnswers);
     
-    if (currentQuestionIndex + 1 < currentQuestions.length) {
+    // Проверяем, был ли это последний вопрос
+    if (currentQuestionIndex + 1 >= currentQuestions.length) {
+        // Последний вопрос — завершаем тест
+        finishQuiz();
+    } else {
+        // Переход к следующему вопросу
         currentQuestionIndex++;
         displayCurrentQuestion();
         
+        // Показываем промежуточный экран на полпути
         if (currentQuestionIndex === Math.floor(currentQuestions.length / 2)) {
             showMidpointScreen();
         }
-    } else {
-        finishQuiz();
     }
 }
 
@@ -174,6 +180,9 @@ function continueQuiz() {
 }
 
 function finishQuiz() {
+    console.log('Тест завершён! Количество ответов:', userAnswers.length);
+    
+    // Подсчитываем результаты
     const scores = calculateScores(userAnswers, currentQuestions);
     const strategy = getDominantType(scores);
     const percentages = getPercentages(scores);
@@ -187,10 +196,13 @@ function finishQuiz() {
         courses: strategy.courses || []
     };
     
+    // Сохраняем результат
     saveResult(currentResult);
     incrementQuizCount();
     recordResultType(strategy.name);
     clearProgress();
+    
+    // Показываем результат
     displayResults();
 }
 
